@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Program Stats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label, select, input {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        select, input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f9;
+        }
+
+        .short-input {
+            width: 80px;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        const data = {
+            'AMERICORPS PROGRAM': {
+                'The Library VISTA Project': ['Volunteer Engagements', 'Training Sessions', 'Consultations'],
+                'Digital Corps': ['Classes Offered', 'Program Participants', 'Training Hours'],
+                'Outreach': ['Outreach Events', 'Program Participants', 'Community Interactions']
+            },
+            'AMERICORPS PROGRAM': {
+                'The Library VISTA Project': ['Volunteer Engagements', 'Training Sessions', 'Consultations'],
+                'Digital Corps': ['Classes Offered', 'Program Participants', 'Training Hours'],
+                'Outreach': ['Outreach Events', 'Program Participants', 'Community Interactions']
+            },
+            'COMMUNITY SPECIALISTS': {
+                'Careers': ['Patron Consultations', 'Career Workshops', 'Job Fairs', 'Outreach Events', 'Participants'],
+                'Health & Wellness': ['Wellness Workshops', 'Health Services', 'Consultations', 'Programs', 'Program Participants'],
+                'Civic Engagement': ['Patron and Staff Consultations', 'Voter Registration Programs', 'Civic Workshops', 'Outreach Events', 'Participants'],
+                'Nonprofit': ['Nonprofit Consultations', 'Programs', 'Outreach Events', 'Participants'],
+                'Small Business & Entrepreneurship': ['Patron Consultations', 'Programs', 'Program Participants', 'Outreach Events', 'Participants'],
+                'Services': ['General Consultations', 'Assistance Provided', 'Workshops', 'Participants']
+            },
+            'MOBILE SERVICES': {
+                'Books to Go': ['People Served', 'Books Circulated', 'Classrooms Visited'],
+                'Takeaway Books': ['Books Distributed', 'Outreach Events', 'Participants'],
+                'Senior Services': ['People Served-Library by Mail', 'People Served-Lobby Stops', 'Agencies Visited', 'Programs/Events', 'Program Participants', 'Books Circulated'],
+                'Mobile Services Outreach': ['Outreach Events', 'People Served', 'Circulation'],
+                'Bookmobile Stops': ['People', 'Books Circulated', 'Agencies Visited', 'Programs', 'Program Participants']
+            },
+            'OUTREACH OPERATIONS (MOJ & EB)': {
+                'Outreach': ['Outreach Events', 'Program Participants', 'Community Interactions']
+            },
+            'PEER PROGRAM': {
+                'Peer Interactions': ['Hours Worked', 'Direct Patron Contact Hours', 'Duplicated # of Interactions', 'Crisis Support', 'De-escalation', 'Outreach', 'Resources Provided', 'UHBH Intake Support', 'Inciden>'],
+                'Peer Interactions by Gender': ['Male Interactions', 'Female Interactions', 'Non-Binary Interactions'],
+                'Peer Interactions by Race': ['White Interactions', 'Black Interactions', 'Hispanic Interactions', 'Asian Interactions', 'Other'],
+                'Peer Interactions by Age': ['Childr', 'Teens', '20s','30S', '40S', '50S', '60S','70S','80S','90S','TOTAL']
+            },
+            'REFUGEE & IMMIGRANT SERVICES & EMPOWERMENT': {
+                'Promotion/Social Media': ['Newsletter Reach', 'Newsletter Engagements', 'Facebook Reach', 'Facebook Engagements', 'LinkedIn Unique Views', 'Instagram Reach'],
+                'Classes': ['Classes Held', 'Program Participants', 'Sessions Conducted'],
+                'Programs': ['Programs Offered', 'Program Participants', 'Sessions Held'],
+                'Referrals': ['Patrons Requesting Referrals', 'Referrals Made'],
+                'Volunteers': ['Volunteers Engaged', 'Volunteer Hours Contributed'],
+                'Voiance': ['Voiance Interpreting Calls', 'Participants Assisted']
+            },
+            'SENIOR PROGRAMMING': {
+                'Programs': ['Branch Programs', 'Mobile Services Programs', 'Program Participants'],
+                'Services': ['Senior Listen Line Listens'],
+                'Outreach': ['Program Participants', 'Community Outreach Events']
+            },
+            'COMMUNITY RESOURCES': {
+                'Services and Referrals': ['Patron Consultations', 'Referrals Made', 'Services Delivered'],
+                'Programming': ['Programs', 'Program Participants', 'Sessions'],
+                'Outreach': ['Outreach Events', 'Participants', 'Feedback Collected']
+            }
+            
+
+        };
+
+        function updateTable() {
+            const department = document.getElementById('department').value;
+            const activityTable = document.getElementById('activity-table');
+
+            activityTable.innerHTML = '';
+
+            if (department && data[department]) {
+                Object.entries(data[department]).forEach(([programCat, activities]) => {
+                    activities.forEach(activity => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td><input type="hidden" name="program_cat[]" value="${programCat}">${programCat}</td>
+                            <td><input type="hidden" name="activity[]" value="${activity}">${activity}</td>
+                            <td><input type="number" name="stats[]" placeholder="Enter stats" required></td>
+                        `;
+                        activityTable.appendChild(row);
+                    });
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Program Stats</h1>
+        <form action="/submit_bulk" method="post">
+            <label for="department">Department:</label>
+            <select id="department" name="department" onchange="updateTable()" required>
+                <option value="">Select Department</option>
+                <option value="AMERICORPS PROGRAM">AMERICORPS PROGRAM</option>
+                <option value="COMMUNITY RESOURCES">COMMUNITY RESOURCES</option>
+                <option value="COMMUNITY SPECIALISTS">COMMUNITY SPECIALISTS</option>
+                <option value="MOBILE SERVICES">MOBILE SERVICES</option>
+                <option value="OUTREACH OPERATIONS (MOJ & EB)">OUTREACH OPERATIONS (MOJ & EB)</option>
+                <option value="PEER PROGRAM">PEER PROGRAM</option>
+                <option value="REFUGEE & IMMIGRANT SERVICES & EMPOWERMENT">REFUGEE & IMMIGRANT SERVICES & EMPOWERMENT</option>
+                <option value="SENIOR PROGRAMMING">SENIOR PROGRAMMING</option>
+            </select>
+
+            <label>Activities and Stats:</label>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Program Category</th>
+                        <th>Activity</th>
+                        <th>Stats</th>
+                    </tr>
+                </thead>
+                <tbody id="activity-table">
+                    <!-- Populated dynamically -->
+                </tbody>
+            </table>
+
+            <label for="month_year">Date:</label>
+            <input type="date" id="month_year" name="month_year" required>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
