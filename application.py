@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 #outreach_deploy
 
-application = Flask(__name__)
+application = app = Flask(__name__)
 
 # Configuration
 ENV = 'prod'  # Change to 'dev' for development environment
