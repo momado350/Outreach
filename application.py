@@ -69,6 +69,6 @@ def submit_bulk():
 
 
 # Run the application
-#applicationlication = application
+app = application
 if __name__ == '__main__':
     application.run()
