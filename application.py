@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 #outreach_deploy
 
-application = app = Flask(__name__)
+application = Flask(__name__)
 
 # Configuration
 ENV = 'prod'  # Change to 'dev' for development environment
@@ -69,6 +69,6 @@ def submit_bulk():
 
 
 # Run the application
-app = application
+#app = application
 if __name__ == '__main__':
     application.run()
