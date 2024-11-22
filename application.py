@@ -71,4 +71,5 @@ def submit_bulk():
 # Run the application
 #app = application
 if __name__ == '__main__':
+    application.debug = True
     application.run()
