@@ -3,21 +3,21 @@ from flask_sqlalchemy import SQLAlchemy
 
 #outreach_deploy
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 # Configuration
 ENV = 'prod'  # Change to 'dev' for development environment
 if ENV == 'dev':
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/lexus2'
+    application.debug = True
+    application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/lexus2'
 else:
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:kcpl2021Dataaws@data-analysis-db.c6jqnuecx3su.us-east-2.rds.amazonaws.com:5432/outreach_db_test'#Python2020
+    application.debug = True
+    application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:kcpl2021Dataaws@data-analysis-db.c6jqnuecx3su.us-east-2.rds.amazonaws.com:5432/outreach_db_test'#Python2020
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-app.app_context().push()
+db = SQLAlchemy(application)
+application.app_context().push()
 
 # Models
 class OutreachStat(db.Model):
@@ -37,11 +37,11 @@ class OutreachStat(db.Model):
         self.month_year = month_year
 
 # Routes
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/submit_bulk', methods=['POST'])
+@application.route('/submit_bulk', methods=['POST'])
 def submit_bulk():
     department = request.form.get('department')
     program_cats = request.form.getlist('program_cat[]')
@@ -68,7 +68,7 @@ def submit_bulk():
     return "Data submitted successfully!"
 
 
-# Run the app
-#application = app
+# Run the application
+#applicationlication = application
 if __name__ == '__main__':
-    app.run()
+    application.run()
